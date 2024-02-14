@@ -76,10 +76,15 @@ def calculate_surplus_data(sales_row):
     """
     print("Calculating surplus data...\n")
     stock = SHEET.worksheet("stock").get_all_values()
-    # pprint(stock)  # this was used for pprint insted print 
+    # pprint(stock)  # this was used for pprint insted print
     # during postprocess installed in the beginning
     stock_row = stock[-1]
-    print(stock_row)
+    surplus_data = []
+    for stock, sales in zip(stock_row, sales_row):
+        # special for loop case when one or more lists are used
+        surplus = int(stock) - sales
+        surplus_data.append(surplus)
+    return surplus_data
 
 
 def main():
@@ -90,7 +95,8 @@ def main():
     sales_data = [int(num) for num in data]
     # upper line converts to list of int not str
     update_sales_worksheet(sales_data)
-    calculate_surplus_data(sales_data)
+    new_surplus_data = calculate_surplus_data(sales_data)
+    print(new_surplus_data)
 
 
 print("Welcome to Love Sandwitches Data automation")
