@@ -66,6 +66,16 @@ def update_sales_worksheet(data):
     print("Sales worksheet updated successfully.\n")
 
 
+def update_surplus_worksheet(data):
+    """
+    Update surplus worksheet, add new row with the list new surplus data.
+    """
+    print("Updating surplus worksheet...""\n")
+    surplus_worksheet = SHEET.worksheet("surplus")
+    surplus_worksheet.append_row(data)
+    print("Surplus worksheet updated successfully.\n")
+
+
 def calculate_surplus_data(sales_row):
     """
     Compare sales with stock and calculate the surplus for each item type.
@@ -82,6 +92,7 @@ def calculate_surplus_data(sales_row):
     surplus_data = []
     for stock, sales in zip(stock_row, sales_row):
         # special for loop case when one or more lists are used
+        # method is called zip loop
         surplus = int(stock) - sales
         surplus_data.append(surplus)
     return surplus_data
@@ -96,8 +107,9 @@ def main():
     # upper line converts to list of int not str
     update_sales_worksheet(sales_data)
     new_surplus_data = calculate_surplus_data(sales_data)
-    print(new_surplus_data)
+    update_surplus_worksheet(new_surplus_data)
 
 
 print("Welcome to Love Sandwitches Data automation")
 main()
+
